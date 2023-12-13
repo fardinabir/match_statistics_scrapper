@@ -11,5 +11,6 @@ func main() {
 	//}
 	//
 	//job.StartTicker()
-	scrapper.Scraps()
+	//scrapper.Scraps()
+	scrapper.ScrapsEuroBasket()
 }
