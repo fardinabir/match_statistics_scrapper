@@ -56,10 +56,14 @@ func EspnScrap(url string) {
 				allStat = append(allStat, statEspn)
 			}
 		})
-		//fmt.Println(allStat)
+		fmt.Println("Espn Scrapper Result", allStat)
 	})
 
 	// visiting the target page
-	c.Visit(url)
+	err := c.Visit(url)
+	if err != nil {
+		fmt.Println("Error while visiting url : ", err)
+		return
+	}
 	return
 }
