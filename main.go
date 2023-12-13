@@ -11,5 +11,5 @@ func main() {
 	//}
 	//
 	//job.StartTicker()
-	scrapper.Scraps()
+	scrapper.EspnScrap("https://www.espn.co.uk/mens-college-basketball/player/_/id/5105785/max-mackinnon")
 }
