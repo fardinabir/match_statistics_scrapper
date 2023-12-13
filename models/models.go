@@ -17,7 +17,7 @@ type EspnStat struct {
 	PTS    string
 }
 
-type EuroBasket struct {
+type EuroBasketStat struct {
 	Date        string
 	Team        string
 	AgainstTeam string
@@ -59,4 +59,19 @@ type BnxtStat struct {
 	Bs       string
 	Br       string
 	Eff      string
+}
+
+type NblStat struct {
+	Date string
+	Opp  string
+	Min  string
+	FgP  string
+	FtP  string
+	Reb  string
+	Ast  string
+	Blk  string
+	Stl  string
+	To   string
+	Pf   string
+	Pts  string
 }

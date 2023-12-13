@@ -44,9 +44,9 @@ func ScrapsEuroBasket(url string) {
 		fmt.Println("Couldn't Visit")
 	}
 
-	stats := []models.EuroBasket{}
+	stats := []models.EuroBasketStat{}
 	for _, row := range rows {
-		data := models.EuroBasket{
+		data := models.EuroBasketStat{
 			Date:        row[0],
 			Team:        row[1],
 			AgainstTeam: row[2],
@@ -68,6 +68,6 @@ func ScrapsEuroBasket(url string) {
 		}
 		stats = append(stats, data)
 	}
-	fmt.Println("EuroBasket Scrapper result : ", stats)
+	fmt.Println("EuroBasketStat Scrapper result : ", stats)
 	return
 }
