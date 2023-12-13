@@ -37,3 +37,26 @@ type EuroBasket struct {
 	TO          string
 	RNK         string
 }
+
+type BnxtStat struct {
+	GameDate string
+	Game     string
+	Result   string
+	PTS      string
+	Min      string
+	TwoP     string
+	ThreeP   string
+	FgP      string
+	FtP      string
+	Dr       string
+	Or       string
+	Tot      string
+	Fp       string
+	Df       string
+	Ast      string
+	St       string
+	To       string
+	Bs       string
+	Br       string
+	Eff      string
+}
