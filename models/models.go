@@ -103,3 +103,21 @@ type BleagueStat struct {
 	Eff       string
 	PlusMinus string
 }
+
+type BritishBasketBallStat struct {
+	Team    string
+	Date    string
+	Min     string
+	FgP     string
+	ThreePP string
+	FtP     string
+	Off     string
+	Def     string
+	Reb     string
+	Ast     string
+	Stl     string
+	Blk     string
+	Pf      string
+	To      string
+	Pts     string
+}
