@@ -1,3 +1,5 @@
 telegram:
   token: 6455629506:AAEQAFzzB0RYxpyYRZEsx2ZuLWN_dgcA_EM
-  chatId: 6266824055
+  chatIDList:
+    - 6266824055
+    - 1247260748

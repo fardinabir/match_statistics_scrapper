@@ -75,3 +75,31 @@ type NblStat struct {
 	Pf   string
 	Pts  string
 }
+
+type BleagueStat struct {
+	Day       string
+	VS        string
+	HA        string
+	WL        string
+	Min       string
+	Pts       string
+	FgP       string
+	TwoFgP    string
+	ThreeFgP  string
+	FtP       string
+	EfgP      string
+	TsP       string
+	Or        string
+	Dr        string
+	Tr        string
+	As        string
+	Ast       string
+	To        string
+	St        string
+	Bs        string
+	Bsr       string
+	F         string
+	Fd        string
+	Eff       string
+	PlusMinus string
+}
