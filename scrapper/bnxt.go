@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func ScrapsBnxt(url string) {
+func ScrapsBnxt(url string) []models.BnxtStat {
 	page := rod.New().MustConnect().MustPage(url).MustWaitLoad()
 
 	// Get the HTML content after JavaScript execution
@@ -25,6 +25,7 @@ func ScrapsBnxt(url string) {
 		log.Fatal(err)
 	}
 
+	fmt.Println("Document after request ", doc.Text())
 	// Find elements by tag name or class
 	var allStat []models.BnxtStat
 	doc.Find("#match_stats_table").Each(func(i int, s *goquery.Selection) {
@@ -64,5 +65,5 @@ func ScrapsBnxt(url string) {
 
 	})
 	fmt.Println(allStat)
-	return
+	return allStat
 }

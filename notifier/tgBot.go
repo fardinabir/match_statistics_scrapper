@@ -22,9 +22,11 @@ func TgBot() {
 
 	scrapData := []interface{}{}
 
-	scrapper.ScrapsBnxt(`https://bnxtleague.com/en/player-statistics/?player_id=2882&amp;team\_id=162`)
-	scrapper.NblScrap("https://nbl.com.au/player/3713/853140/lachlan-anderson")
-	scrapData = append(scrapData, "nbl", "bnxt")
+	arrayBnxt := scrapper.ScrapsBnxt(`https://bnxtleague.com/en/player-statistics/?player_id=2882&amp;team\_id=162`)
+	arrayNbl := scrapper.NblScrap("https://nbl.com.au/player/3713/853140/lachlan-anderson")
+	arrayB3league := scrapper.ScrapsB3league("http://210.140.77.209/player/?key=93&amp;team=715&amp;player=43239") // Working one : https://www.b3league.jp/player/?key=93&team=2725&player=9208
+
+	scrapData = append(scrapData, arrayBnxt, arrayNbl, arrayB3league)
 
 	for _, data := range scrapData {
 		for _, chatID := range chatIDList {

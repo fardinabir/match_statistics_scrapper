@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func NblScrap(url string) {
+func NblScrap(url string) []models.NblStat {
 
 	page := rod.New().MustConnect().MustPage(url).MustWaitLoad()
 
@@ -56,5 +56,5 @@ func NblScrap(url string) {
 	})
 
 	fmt.Println(allStat)
-	return
+	return allStat
 }

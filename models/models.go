@@ -121,3 +121,21 @@ type BritishBasketBallStat struct {
 	To      string
 	Pts     string
 }
+
+type B3leagueStat struct {
+	Date   string
+	Pts    string
+	ThreeP string
+	TwoP   string
+	FtP    string
+	Pf     string
+	Oreb   string
+	Dreb   string
+	Reb    string
+	Tov    string
+	Ast    string
+	Stl    string
+	Blk    string
+	Eff    string
+	Min    string
+}
