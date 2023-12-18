@@ -7,7 +7,7 @@ import (
 	"match_statistics_scrapper/models"
 )
 
-func ScrapsB3league(url string) []models.B3leagueStat {
+func ScrapsB3league(url string) []*models.MatchStatResponse {
 	// creating a new Colly instance
 	c := colly.NewCollector()
 
@@ -52,26 +52,25 @@ func ScrapsB3league(url string) []models.B3leagueStat {
 		fmt.Println("Couldn't Visit")
 	}
 
-	stats := []models.B3leagueStat{}
+	stats := []*models.MatchStatResponse{}
 	for _, row := range rows {
-		data := models.B3leagueStat{
+		statResp := &models.MatchStatResponse{
 			Date:   row[2],
-			Pts:    row[3],
-			ThreeP: row[6],
-			TwoP:   row[9],
-			FtP:    row[12],
-			Pf:     row[13],
-			Oreb:   row[14],
-			Dreb:   row[15],
-			Reb:    row[16],
-			Tov:    row[17],
-			Ast:    row[18],
-			Stl:    row[19],
-			Blk:    row[20],
-			Eff:    row[21],
+			Opp:    "",
+			Result: "",
 			Min:    row[22],
+			FGP:    "",
+			FTP:    row[12],
+			ThreeP: row[6],
+			REB:    row[16],
+			AST:    row[18],
+			BLK:    row[20],
+			STL:    row[19],
+			PF:     row[13],
+			TO:     row[17],
+			PTS:    row[3],
 		}
-		stats = append(stats, data)
+		stats = append(stats, statResp)
 	}
 	fmt.Println("B3league Scrapper result : ", stats)
 	return stats

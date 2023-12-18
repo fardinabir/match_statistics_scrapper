@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func ScrapsBleague(url string) {
+func ScrapsBleague(url string) []*models.MatchStatResponse {
 	// creating a new Colly instance
 	c := colly.NewCollector()
 
@@ -46,37 +46,26 @@ func ScrapsBleague(url string) {
 		fmt.Println("Couldn't Visit")
 	}
 
-	stats := []models.BleagueStat{}
+	stats := []*models.MatchStatResponse{}
 	for _, row := range rows {
-		data := models.BleagueStat{
-			Day:       utils.BleagueDate(strings.TrimSpace(row[0])),
-			VS:        strings.TrimSpace(row[1]),
-			HA:        strings.TrimSpace(row[2]),
-			WL:        strings.TrimSpace(row[3]),
-			Min:       strings.TrimSpace(row[5]),
-			Pts:       strings.TrimSpace(row[6]),
-			FgP:       strings.TrimSpace(row[9]),
-			TwoFgP:    strings.TrimSpace(row[12]),
-			ThreeFgP:  strings.TrimSpace(row[15]),
-			FtP:       strings.TrimSpace(row[18]),
-			EfgP:      strings.TrimSpace(row[19]),
-			TsP:       strings.TrimSpace(row[20]),
-			Or:        strings.TrimSpace(row[21]),
-			Dr:        strings.TrimSpace(row[22]),
-			Tr:        strings.TrimSpace(row[23]),
-			As:        strings.TrimSpace(row[24]),
-			Ast:       strings.TrimSpace(row[25]),
-			To:        strings.TrimSpace(row[26]),
-			St:        strings.TrimSpace(row[27]),
-			Bs:        strings.TrimSpace(row[28]),
-			Bsr:       strings.TrimSpace(row[29]),
-			F:         strings.TrimSpace(row[30]),
-			Fd:        strings.TrimSpace(row[31]),
-			Eff:       strings.TrimSpace(row[32]),
-			PlusMinus: strings.TrimSpace(row[33]),
+		statResp := &models.MatchStatResponse{
+			Date:   utils.BleagueDate(strings.TrimSpace(row[0])),
+			Opp:    strings.TrimSpace(row[1]),
+			Result: strings.TrimSpace(row[3]),
+			Min:    strings.TrimSpace(row[5]),
+			FGP:    strings.TrimSpace(row[9]),
+			FTP:    strings.TrimSpace(row[18]),
+			ThreeP: strings.TrimSpace(row[15]),
+			REB:    strings.TrimSpace(row[23]),
+			AST:    strings.TrimSpace(row[24]),
+			BLK:    strings.TrimSpace(row[28]),
+			STL:    strings.TrimSpace(row[27]),
+			PF:     strings.TrimSpace(row[31]),
+			TO:     strings.TrimSpace(row[26]),
+			PTS:    strings.TrimSpace(row[6]),
 		}
-		stats = append(stats, data)
+		stats = append(stats, statResp)
 	}
 	fmt.Println("Bleague Scrapper result : ", stats)
-	return
+	return stats
 }
