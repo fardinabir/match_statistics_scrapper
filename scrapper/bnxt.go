@@ -6,6 +6,7 @@ import (
 	"github.com/go-rod/rod"
 	"log"
 	"match_statistics_scrapper/models"
+	"match_statistics_scrapper/utils"
 	"strings"
 )
 
@@ -38,7 +39,7 @@ func ScrapsBnxt(url string) []models.BnxtStat {
 			})
 			if len(trData) == 28 {
 				statBnxt := models.BnxtStat{
-					GameDate: trData[0],
+					GameDate: utils.BnxtDate(trData[0]),
 					Game:     trData[1],
 					Result:   trData[2],
 					PTS:      trData[3],

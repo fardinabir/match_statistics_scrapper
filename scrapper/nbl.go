@@ -6,6 +6,7 @@ import (
 	"github.com/go-rod/rod"
 	"log"
 	"match_statistics_scrapper/models"
+	"match_statistics_scrapper/utils"
 	"strings"
 )
 
@@ -37,7 +38,7 @@ func NblScrap(url string) []models.NblStat {
 			})
 			if len(trData) == 12 {
 				statNbl := models.NblStat{
-					Date: strings.TrimSpace(trData[0]),
+					Date: utils.NblDate(strings.TrimSpace(trData[0])),
 					//Opp:  strings.TrimSpace(trData[1]),
 					Min: strings.TrimSpace(trData[2]),
 					FgP: strings.TrimSpace(trData[3]),

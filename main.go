@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/spf13/viper"
 	"log"
-	"match_statistics_scrapper/db"
 )
 
 func main() {
@@ -22,5 +21,5 @@ func main() {
 	//scrapper.ScrapsBritishBasketBall("https://www.britishbasketballleague.com/competitions/?WHurl=%2Fperson%2F6661%2Fgamelog%3F")
 	//scrapper.ScrapsB3league("http://210.140.77.209/player/?key=93&amp;team=715&amp;player=43239") // Working one : https://www.b3league.jp/player/?key=93&team=2725&player=9208
 
-	db.ConnectDb()
+	//db.ConnectDb()
 }

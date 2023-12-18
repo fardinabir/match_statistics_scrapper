@@ -5,6 +5,7 @@ import (
 	"github.com/gocolly/colly"
 	"log"
 	"match_statistics_scrapper/models"
+	"match_statistics_scrapper/utils"
 	"strings"
 )
 
@@ -48,7 +49,7 @@ func ScrapsBleague(url string) {
 	stats := []models.BleagueStat{}
 	for _, row := range rows {
 		data := models.BleagueStat{
-			Day:       strings.TrimSpace(row[0]),
+			Day:       utils.BleagueDate(strings.TrimSpace(row[0])),
 			VS:        strings.TrimSpace(row[1]),
 			HA:        strings.TrimSpace(row[2]),
 			WL:        strings.TrimSpace(row[3]),

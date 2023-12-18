@@ -6,6 +6,7 @@ import (
 	"github.com/go-rod/rod"
 	"log"
 	"match_statistics_scrapper/models"
+	"match_statistics_scrapper/utils"
 	"strings"
 )
 
@@ -37,7 +38,7 @@ func ScrapsBritishBasketBall(url string) {
 			})
 			statBnxt := models.BritishBasketBallStat{
 				Team:    strings.TrimSpace(trData[0]),
-				Date:    strings.TrimSpace(trData[1]),
+				Date:    utils.BritishBasketBallDate(strings.TrimSpace(trData[1])),
 				Min:     strings.TrimSpace(trData[2]),
 				FgP:     strings.TrimSpace(trData[5]),
 				ThreePP: strings.TrimSpace(trData[8]),

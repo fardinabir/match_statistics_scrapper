@@ -5,6 +5,7 @@ import (
 	"github.com/gocolly/colly"
 	"log"
 	"match_statistics_scrapper/models"
+	"match_statistics_scrapper/utils"
 )
 
 func ScrapsEuroBasket(url string) {
@@ -47,7 +48,7 @@ func ScrapsEuroBasket(url string) {
 	stats := []models.EuroBasketStat{}
 	for _, row := range rows {
 		data := models.EuroBasketStat{
-			Date:        row[0],
+			Date:        utils.EuroBasketDate(row[0]),
 			Team:        row[1],
 			AgainstTeam: row[2],
 			Result:      row[3],

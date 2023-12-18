@@ -6,6 +6,7 @@ import (
 	"github.com/gocolly/colly"
 	"log"
 	"match_statistics_scrapper/models"
+	"match_statistics_scrapper/utils"
 )
 
 func EspnScrap(url string) {
@@ -38,7 +39,7 @@ func EspnScrap(url string) {
 			})
 			if len(trData) == 14 {
 				statEspn := models.EspnStat{
-					Date:   trData[0],
+					Date:   utils.EspnDate(trData[0]),
 					Opp:    trData[1],
 					Result: trData[2],
 					Min:    trData[3],
