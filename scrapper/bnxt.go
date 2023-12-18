@@ -55,6 +55,7 @@ func ScrapsBnxt(url string) []*models.MatchStatResponse {
 					PTS:    trData[3],
 				}
 				allStat = append(allStat, statResp)
+				fmt.Println(statResp)
 			}
 		})
 

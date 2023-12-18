@@ -6,6 +6,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
+	"match_statistics_scrapper/models"
 )
 
 var (
@@ -13,7 +14,10 @@ var (
 	err error
 )
 
-func ConnectDb() {
+func ConnectDB() *gorm.DB {
+	if Db != nil {
+		return Db
+	}
 	host := viper.GetString("database.host")
 	port := viper.GetString("database.port")
 	password := viper.GetString("database.password")
@@ -21,15 +25,19 @@ func ConnectDb() {
 	dbname := viper.GetString("database.dbname")
 
 	dsn := fmt.Sprintf("host=%s port=%s password=%s user=%s dbname=%s sslmode=disable",
-		host, port, password, user, dbname,
-	)
+		host, port, password, user, dbname)
 
 	Db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("DB connection error", err)
+		return nil
 	}
 
-	fmt.Println("Successfully Connected Database :D")
+	fmt.Println("Successfully Connected Database")
 
-	//Db.AutoMigrate(models.MatchStatUrl{})
+	err = Db.AutoMigrate(models.PlayersData{}, models.PlayersData{})
+	if err != nil {
+		return nil
+	}
+	return Db
 }

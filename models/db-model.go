@@ -4,7 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type MatchStatUrl struct {
+type PlayersData struct {
 	gorm.Model
 	PlayerName string `json:"playerName"`
 	Url        string `json:"url"`
@@ -12,7 +12,6 @@ type MatchStatUrl struct {
 
 type ScrappedData struct {
 	gorm.Model
-	ScrappedHash string `json:"scrappedHash" gorm:"column:scrapped_hash;size:30;index"`
-	//LastScrappingTime string `json:"lastScrappingTime"`
-	//LastScrappedData  string `json:"lastScrappedData"`
+	Hash string `json:"scrappedHash" gorm:"column:hash;size:30;index"`
+	Data string `json:"data" gorm:"column:data"`
 }
