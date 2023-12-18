@@ -12,6 +12,6 @@ type PlayersData struct {
 
 type ScrappedData struct {
 	gorm.Model
-	Hash string `json:"scrappedHash" gorm:"column:hash;size:30;index"`
+	Hash string `json:"scrappedHash" gorm:"column:hash;size:255;index"`
 	Data string `json:"data" gorm:"column:data"`
 }

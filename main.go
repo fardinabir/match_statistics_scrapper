@@ -13,6 +13,7 @@ func main() {
 		log.Fatalf("Error reading config file: %s", err)
 	}
 	//
+	db.ConnectDB()
 	job.StartTicker()
 	//processor.FetchPlayerStats()
 	//scrapper.ScrapsBnxt(`https://bnxtleague.com/en/player-statistics/?player_id=2882&amp;team\_id=162`)
@@ -25,5 +26,4 @@ func main() {
 	//scrapper.ScrapsB3league("http://210.140.77.209/player/?key=93&amp;team=715&amp;player=43239") // Working one : https://www.b3league.jp/player/?key=93&team=2725&player=9208
 	//scrapper.ScrapsB3league("https://www.b3league.jp/player/?key=93&team=2725&player=9208")
 
-	db.ConnectDB()
 }
