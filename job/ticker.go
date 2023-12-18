@@ -1,7 +1,7 @@
 package job
 
 import (
-	"match_statistics_scrapper/notifier"
+	"match_statistics_scrapper/processor"
 	"time"
 )
 
@@ -12,7 +12,7 @@ func StartTicker() {
 	for {
 		select {
 		case <-ticker.C:
-			notifier.TgBot()
+			processor.FetchPlayerStats()
 		}
 	}
 }

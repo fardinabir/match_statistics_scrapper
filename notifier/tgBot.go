@@ -1,15 +1,16 @@
 package notifier
 
 import (
+	"crypto/sha1"
+	"encoding/hex"
 	"fmt"
 	"github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/spf13/viper"
 	"log"
-	"match_statistics_scrapper/scrapper"
 	"reflect"
 )
 
-func TgBot() {
+func TgBot(data interface{}) error {
 	token := viper.GetString("telegram.token")
 	chatIDList := viper.GetIntSlice("telegram.chatIDList")
 	fmt.Println(chatIDList)
@@ -18,32 +19,22 @@ func TgBot() {
 	if err != nil {
 		log.Println("Token Problem")
 		log.Panic(err)
+		return err
 	}
 
-	scrapData := []interface{}{}
+	stringified := stringifyStruct(data)
+	for _, chatID := range chatIDList {
 
-	arrayBnxt := scrapper.ScrapsBnxt(`https://bnxtleague.com/en/player-statistics/?player_id=2882&amp;team\_id=162`)
-	arrayNbl := scrapper.NblScrap("https://nbl.com.au/player/3713/853140/lachlan-anderson")
-	arrayB3league := scrapper.ScrapsB3league("http://210.140.77.209/player/?key=93&amp;team=715&amp;player=43239") // Working one : https://www.b3league.jp/player/?key=93&team=2725&player=9208
-
-	scrapData = append(scrapData, arrayBnxt, arrayNbl, arrayB3league)
-
-	for _, data := range scrapData {
-		for _, chatID := range chatIDList {
-			stringified := stringifyArrayOfStructs(data)
-
-			message := tgbotapi.NewMessage(int64(chatID), stringified)
-			_, err = bot.Send(message)
-			if err != nil {
-				log.Println(err)
-			}
+		message := tgbotapi.NewMessage(int64(chatID), stringified)
+		_, err = bot.Send(message)
+		if err != nil {
+			log.Println(err)
+			return err
 		}
 	}
-	//message := tgbotapi.NewMessage(chatIDList, "Hello There ! ")
-	//_, err = bot.Send(message)
-	//if err != nil {
-	//	log.Println(err)
-	//}
+	//hashed := getHashOfData(stringified)
+	// TODO: insert on database
+	return nil
 }
 
 func stringifyArrayOfStructs(data interface{}) string {
@@ -79,4 +70,12 @@ func stringifyStruct(data interface{}) string {
 	}
 
 	return str
+}
+
+func getHashOfData(str string) string {
+	sha1Hash := sha1.New()
+	sha1Hash.Write([]byte(str))
+	hashBytes := sha1Hash.Sum(nil)
+	sha1String := hex.EncodeToString(hashBytes)
+	return sha1String
 }
