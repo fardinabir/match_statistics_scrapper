@@ -60,11 +60,11 @@ func FetchPlayerStats() {
 
 func scrapFromUrl(url string) []*models.MatchStatResponse {
 	if strings.Contains(url, "basketball.eurobasket.com") {
-		//return scrapper.ScrapsEuroBasket(url)
+		return scrapper.ScrapsEuroBasket(url)
 	} else if strings.Contains(url, "espn.co") {
 		return scrapper.EspnScrap(url)
 	} else if strings.Contains(url, "nbl.com.au") {
-		//return scrapper.NblScrap(url)
+		return scrapper.NblScrap(url)
 	} else if strings.Contains(url, "bleague.jp") {
 		return scrapper.ScrapsBleague(url)
 	} else if strings.Contains(url, "bnxtleague.com") {

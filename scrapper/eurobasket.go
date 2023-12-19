@@ -8,7 +8,7 @@ import (
 	"match_statistics_scrapper/utils"
 )
 
-func ScrapsEuroBasket(url string) {
+func ScrapsEuroBasket(url string) []*models.MatchStatResponse {
 	// creating a new Colly instance
 	c := colly.NewCollector()
 
@@ -37,30 +37,26 @@ func ScrapsEuroBasket(url string) {
 		fmt.Println("Couldn't Visit")
 	}
 
-	stats := []models.EuroBasketStat{}
+	stats := []*models.MatchStatResponse{}
 	for _, row := range rows {
-		data := models.EuroBasketStat{
-			Date:        utils.EuroBasketDate(row[0]),
-			Team:        row[1],
-			AgainstTeam: row[2],
-			Result:      row[3],
-			Min:         row[4],
-			Pts:         row[5],
-			TwoFGP:      row[6],
-			ThreeFGP:    row[7],
-			FT:          row[8],
-			RO:          row[9],
-			RD:          row[10],
-			RT:          row[11],
-			AS:          row[12],
-			PF:          row[13],
-			BS:          row[14],
-			ST:          row[15],
-			TO:          row[16],
-			RNK:         row[17],
+		statResp := &models.MatchStatResponse{
+			Date:   utils.EuroBasketDate(row[0]),
+			Opp:    row[2],
+			Result: row[3],
+			Min:    row[4],
+			FGP:    row[6],
+			FTP:    row[8],
+			ThreeP: row[7],
+			REB:    row[11],
+			AST:    row[12],
+			BLK:    row[14],
+			STL:    row[15],
+			PF:     row[13],
+			TO:     row[16],
+			PTS:    row[5],
 		}
-		stats = append(stats, data)
+		stats = append(stats, statResp)
 	}
-	fmt.Println("EuroBasketStat Scrapper result : ", stats)
-	return
+	fmt.Println("EuroBasketStat Scrapper result : ", *stats[2])
+	return stats
 }

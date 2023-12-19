@@ -54,9 +54,10 @@ func ScrapsBritishBasketBall(url string) []*models.MatchStatResponse {
 				PTS:    strings.TrimSpace(trData[20]),
 			}
 			allStat = append(allStat, statResp)
+			fmt.Println(*statResp)
 		})
 
 	})
-	fmt.Println(*allStat[0])
+	fmt.Println(allStat)
 	return allStat
 }

@@ -34,7 +34,7 @@ func BnxtDate(date string) string {
 }
 
 func BritishBasketBallDate(date string) string {
-	parsedDate, err := time.Parse("Jan 02, 2006, 3:04 PM", date)
+	parsedDate, err := time.Parse("Jan 2, 2006, 3:04 PM", date)
 	if err != nil {
 		fmt.Println("Error parsing date:", err)
 		return ""
@@ -55,7 +55,7 @@ func EspnDate(date string) string {
 }
 
 func EuroBasketDate(date string) string {
-	parsedDate, err := time.Parse("01/02/2006", date)
+	parsedDate, err := time.Parse("01/2/2006", date)
 	if err != nil {
 		fmt.Println("Error parsing date:", err)
 		return ""
