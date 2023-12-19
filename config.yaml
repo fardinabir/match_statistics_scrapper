@@ -3,6 +3,7 @@ telegram:
   chatIDList:
     - 6266824055
     - 1247260748
+  adminID: 6266824055
 
 database:
   host: localhost

@@ -3,8 +3,7 @@ package main
 import (
 	"github.com/spf13/viper"
 	"log"
-	"match_statistics_scrapper/db"
-	"match_statistics_scrapper/job"
+	"match_statistics_scrapper/notifier"
 )
 
 func main() {
@@ -12,8 +11,8 @@ func main() {
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("Error reading config file: %s", err)
 	}
-	db.ConnectDB()
-	job.StartTicker()
+	//db.ConnectDB()
+	//job.StartTicker()
 	//processor.FetchPlayerStats()
 	//scrapper.ScrapsBnxt(`https://bnxtleague.com/en/player-statistics/?player_id=2882&amp;team\_id=162`)
 	//scrapper.EspnScrap("https://www.espn.co.uk/mens-college-basketball/player/_/id/5105785/max-mackinnon")
@@ -25,4 +24,5 @@ func main() {
 	//scrapper.ScrapsB3league("http://210.140.77.209/player/?key=93&amp;team=715&amp;player=43239") // Working one : https://www.b3league.jp/player/?key=93&team=2725&player=9208
 	//scrapper.ScrapsB3league("https://www.b3league.jp/player/?key=93&team=2725&player=9208")
 
+	notifier.TgBot("hello")
 }

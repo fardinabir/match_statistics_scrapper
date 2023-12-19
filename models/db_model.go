@@ -16,3 +16,9 @@ type ScrappedData struct {
 	Hash string `json:"scrappedHash" gorm:"column:hash;size:255;index"`
 	Data string `json:"data" gorm:"column:data"`
 }
+
+type Subscriber struct {
+	gorm.Model
+	ChatID   int64 `json:"chatID"`
+	Approved bool  `json:"approved"`
+}
