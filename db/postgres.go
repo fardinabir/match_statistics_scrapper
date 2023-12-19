@@ -32,14 +32,10 @@ func ConnectDB() *gorm.DB {
 		log.Fatal("DB connection error", err)
 		return nil
 	}
-
-	fmt.Println("Successfully Connected Database")
-
 	err = Db.AutoMigrate(models.ScrappedData{}, models.PlayersData{}, models.Subscriber{})
 	if err != nil {
 		return nil
 	}
-
 	fmt.Println("Successfully Connected Database")
 	return Db
 }

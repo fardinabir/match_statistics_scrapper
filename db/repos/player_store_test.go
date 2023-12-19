@@ -81,7 +81,7 @@ func TestPlayersStore_InsertData(t *testing.T) {
 	player = models.PlayersData{
 		PlayerName: "Jamell Anderson",
 		Source:     "britishbasketballleague",
-		Url:        "https://www.britishbasketballleague.com/competitions/?WHurl=%2Fperson%2F6661%3F",
+		Url:        "https://www.britishbasketballleague.com/competitions/?WHurl=%2Fperson%2F6661%2Fgamelog%3F",
 	}
 	tm.InsertData(&player)
 }

@@ -19,6 +19,6 @@ type ScrappedData struct {
 
 type Subscriber struct {
 	gorm.Model
-	ChatID   int64 `json:"chatID"`
+	ChatID   int64 `json:"chatID" gorm:"uniqueIndex"`
 	Approved bool  `json:"approved"`
 }

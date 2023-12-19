@@ -1,9 +1,11 @@
 package notifier
 
 import (
+	"errors"
 	"fmt"
 	"github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/spf13/viper"
+	"gorm.io/gorm"
 	"log"
 	"match_statistics_scrapper/db"
 	"match_statistics_scrapper/db/repos"
@@ -12,26 +14,46 @@ import (
 	"strings"
 )
 
-func TgBot(stringified string) error {
-	ss := repos.SubscriberStore{DB: db.ConnectDB()}
+var tgBot *tgbotapi.BotAPI
 
+func GetTgBot() *tgbotapi.BotAPI {
+	if tgBot != nil {
+		return tgBot
+	}
 	token := viper.GetString("telegram.token")
-	chatIDList := viper.GetIntSlice("telegram.chatIDList")
-	fmt.Println(chatIDList)
-
-	bot, err := tgbotapi.NewBotAPI(token)
+	var err error
+	tgBot, err = tgbotapi.NewBotAPI(token)
 	if err != nil {
 		log.Println("Token Problem")
 		log.Panic(err)
-		return err
+		return nil
 	}
+	return tgBot
+}
+
+func LoadAdmin() {
+	ss := repos.SubscriberStore{DB: db.ConnectDB()}
+	adminId := viper.GetInt64("telegram.adminID")
+
+	admin, err := ss.GetSubscriberData(adminId)
+	if errors.Is(err, gorm.ErrRecordNotFound) && admin == nil {
+		subs := models.Subscriber{
+			ChatID:   adminId,
+			Approved: true,
+		}
+		ss.Save(&subs)
+		return
+	}
+	return
+}
+
+func ServeTgBot() error {
+	ss := repos.SubscriberStore{DB: db.ConnectDB()}
+	bot := GetTgBot()
 
 	// Update Config From TgBOT
 	updateConfig := tgbotapi.NewUpdate(0)
 	updates := bot.GetUpdatesChan(updateConfig)
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	// Process updates
 	for update := range updates {
@@ -50,19 +72,19 @@ func TgBot(stringified string) error {
 					log.Println(err)
 				}
 			} else if messageText == "/subscribe" {
-				message := tgbotapi.NewMessage(chatID, "Admin will approve your request! Thanks! :D ")
-				_, err := bot.Send(message)
-				if err != nil {
-					log.Println("Subscription msg rply error", err)
-				}
-
 				sub := &models.Subscriber{
 					ChatID:   chatID,
 					Approved: false,
 				}
-				err = ss.Save(sub)
+				err := ss.Save(sub)
 				if err != nil {
 					log.Println("Cannot Save Subscriber Info: ", err)
+					continue
+				}
+				message := tgbotapi.NewMessage(chatID, "Admin will approve your request! Thanks! :D ")
+				_, err = bot.Send(message)
+				if err != nil {
+					log.Println("Subscription msg rply error", err)
 				}
 
 				adminId := viper.GetInt64("telegram.adminID")
@@ -74,8 +96,14 @@ func TgBot(stringified string) error {
 				}
 			} else if strings.HasPrefix(messageText, "/approve ") {
 				parts := strings.Fields(messageText)
+				adminId := viper.GetInt64("telegram.adminID")
 				if len(parts) != 2 {
 					log.Println("Invalid /approve command format")
+					continue
+				}
+
+				if chatID != adminId {
+					log.Println("Invalid approve access")
 					continue
 				}
 
@@ -95,7 +123,6 @@ func TgBot(stringified string) error {
 					continue
 				}
 
-				adminId := viper.GetInt64("telegram.adminID")
 				approvalMessage = tgbotapi.NewMessage(adminId, fmt.Sprintf("ID %s has been approved!", chatIDToApprove))
 				_, err = bot.Send(approvalMessage)
 				if err != nil {
@@ -111,13 +138,20 @@ func TgBot(stringified string) error {
 			}
 		}
 	}
-	//for _, chatID := range chatIDList {
-	//	message := tgbotapi.NewMessage(int64(chatID), stringified)
-	//	_, err = bot.Send(message)
-	//	if err != nil {
-	//		log.Println(err)
-	//		return err
-	//	}
-	//}
+	return nil
+}
+
+func PublishToSubscribers(stringifiedData string) error {
+	ss := repos.SubscriberStore{DB: db.ConnectDB()}
+	subscribersList, err := ss.GetAllSubscribers()
+	bot := GetTgBot()
+	for _, subscriber := range subscribersList {
+		message := tgbotapi.NewMessage(subscriber.ChatID, stringifiedData)
+		_, err = bot.Send(message)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+	}
 	return nil
 }

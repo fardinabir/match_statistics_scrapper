@@ -39,7 +39,7 @@ func FetchPlayerStats() {
 
 			statsData, err := ss.FindHash(hashed)
 			if errors.Is(err, gorm.ErrRecordNotFound) && statsData == nil {
-				err = notifier.TgBot(stringified)
+				err = notifier.PublishToSubscribers(stringified)
 				if err != nil {
 					fmt.Println("Failed while sending the update")
 					continue
@@ -59,7 +59,9 @@ func FetchPlayerStats() {
 }
 
 func scrapFromUrl(url string) []*models.MatchStatResponse {
-	if strings.Contains(url, "basketball.eurobasket.com") {
+	if strings.Contains(url, "basketball.eurobasket") {
+		return scrapper.ScrapsBasketBallEuroBasket(url)
+	} else if strings.Contains(url, "eurobasket.com") {
 		return scrapper.ScrapsEuroBasket(url)
 	} else if strings.Contains(url, "espn.co") {
 		return scrapper.EspnScrap(url)

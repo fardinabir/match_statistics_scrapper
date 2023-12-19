@@ -8,7 +8,7 @@ import (
 	"match_statistics_scrapper/utils"
 )
 
-func ScrapsEuroBasket(url string) []*models.MatchStatResponse {
+func ScrapsBasketBallEuroBasket(url string) []*models.MatchStatResponse {
 	// creating a new Colly instance
 	c := colly.NewCollector()
 
@@ -20,7 +20,7 @@ func ScrapsEuroBasket(url string) []*models.MatchStatResponse {
 
 	// scraping logic section.gamelogWidget
 	c.OnHTML("tbody", func(e *colly.HTMLElement) {
-		e.ForEach("#187", func(_ int, row *colly.HTMLElement) {
+		e.ForEach("#23", func(_ int, row *colly.HTMLElement) {
 			var cells []string
 
 			row.ForEach("td", func(_ int, cell *colly.HTMLElement) {

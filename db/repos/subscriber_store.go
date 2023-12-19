@@ -21,10 +21,20 @@ func (s *SubscriberStore) Save(sd *models.Subscriber) error {
 
 func (s *SubscriberStore) GetSubscriberData(chatID int64) (*models.Subscriber, error) {
 	var sd models.Subscriber
-	res := s.DB.Model(&models.Subscriber{}).Where("chatID = ?", chatID).Find(&sd)
+	res := s.DB.Model(&models.Subscriber{}).Where("chat_id = ?", chatID).First(&sd)
 	if res.Error != nil {
 		log.Println("Error while getting subscriber in db", res.Error)
 		return nil, res.Error
 	}
 	return &sd, nil
+}
+
+func (s *SubscriberStore) GetAllSubscribers() ([]models.Subscriber, error) {
+	var sd []models.Subscriber
+	res := s.DB.Model(&models.Subscriber{}).Where("approved = ? ", true).Find(&sd)
+	if res.Error != nil {
+		log.Println("Error while getting players in db", res.Error)
+		return nil, res.Error
+	}
+	return sd, nil
 }
