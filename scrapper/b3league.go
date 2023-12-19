@@ -13,16 +13,8 @@ func ScrapsB3league(url string) []*models.MatchStatResponse {
 
 	var rows [][]string
 
-	c.OnRequest(func(r *colly.Request) {
-		fmt.Println("Visiting: ", r.URL)
-	})
-
 	c.OnError(func(_ *colly.Response, err error) {
 		log.Println("Something went wrong: ", err)
-	})
-
-	c.OnResponse(func(r *colly.Response) {
-		fmt.Println("Page visited: ", r.Request.URL)
 	})
 
 	// Counter to keep track of tbody elements

@@ -1,6 +1,7 @@
 package job
 
 import (
+	"log"
 	"match_statistics_scrapper/processor"
 	"time"
 )
@@ -12,7 +13,9 @@ func StartTicker() {
 	for {
 		select {
 		case <-ticker.C:
+			log.Println("######################### Started Fetching #########################")
 			processor.FetchPlayerStats()
+			log.Println("######################### Finished Fetching #########################")
 		}
 	}
 }

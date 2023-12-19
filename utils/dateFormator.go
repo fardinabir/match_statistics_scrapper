@@ -15,7 +15,7 @@ func BleagueDate(date string) string {
 
 	formattedDate := FormattedDate(parsedDate)
 
-	fmt.Println("Formatted Date:", formattedDate)
+	// fmt.Println("Formatted Date:", formattedDate)
 
 	return formattedDate
 }
@@ -28,7 +28,7 @@ func BnxtDate(date string) string {
 	}
 
 	formattedDate := FormattedDate(parsedDate)
-	fmt.Println("Formatted Date:", formattedDate)
+	// fmt.Println("Formatted Date:", formattedDate)
 
 	return formattedDate
 }
@@ -41,7 +41,7 @@ func BritishBasketBallDate(date string) string {
 	}
 
 	formattedDate := FormattedDate(parsedDate)
-	fmt.Println("Formatted Date:", formattedDate)
+	// fmt.Println("Formatted Date:", formattedDate)
 
 	return formattedDate
 }
@@ -62,7 +62,7 @@ func EuroBasketDate(date string) string {
 	}
 
 	formattedDate := FormattedDate(parsedDate)
-	fmt.Println("Formatted Date:", formattedDate)
+	// fmt.Println("Formatted Date:", formattedDate)
 
 	return formattedDate
 }
@@ -91,7 +91,7 @@ func NblDate(date string) string {
 	}
 
 	formattedDate := FormattedDate(parsedDate)
-	fmt.Println("Formatted Date:", formattedDate)
+	// fmt.Println("Formatted Date:", formattedDate)
 
 	return formattedDate
 }

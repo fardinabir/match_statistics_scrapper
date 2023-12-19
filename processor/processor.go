@@ -18,6 +18,7 @@ func FetchPlayerStats() {
 	ps := repos.PlayersStore{DB: db.ConnectDB()}
 	ss := repos.StatsStore{DB: db.ConnectDB()}
 
+	log.Println("Getting player urls")
 	playersData, err := ps.GetPlayersData()
 	if err != nil {
 		log.Println("Failed to get players data")
@@ -25,6 +26,7 @@ func FetchPlayerStats() {
 	}
 
 	for _, player := range playersData {
+		log.Println("Scrapping for ", player.PlayerName)
 		url := player.Url
 		dataScrapped := scrapFromUrl(url)
 
@@ -42,6 +44,7 @@ func FetchPlayerStats() {
 					fmt.Println("Failed while sending the update")
 					continue
 				}
+				// updating hash data
 				err = ss.InsertData(&models.ScrappedData{
 					Hash: hashed,
 					Data: stringified,
@@ -49,9 +52,7 @@ func FetchPlayerStats() {
 				if err != nil {
 					return
 				}
-			}
-			if err != nil {
-				return
+				log.Printf("\n\nSuccessfully published stats of\nPlayer Name : %v,\nSource : %v,\nDate: %v\nData : %v\n\n", data.PlayerName, url, data.Date, stringified)
 			}
 		}
 	}
@@ -60,7 +61,7 @@ func FetchPlayerStats() {
 func scrapFromUrl(url string) []*models.MatchStatResponse {
 	if strings.Contains(url, "basketball.eurobasket.com") {
 		//return scrapper.ScrapsEuroBasket(url)
-	} else if strings.Contains(url, "espn.co.uk") {
+	} else if strings.Contains(url, "espn.co") {
 		return scrapper.EspnScrap(url)
 	} else if strings.Contains(url, "nbl.com.au") {
 		//return scrapper.NblScrap(url)
@@ -74,6 +75,6 @@ func scrapFromUrl(url string) []*models.MatchStatResponse {
 		return scrapper.ScrapsB3league(url)
 	}
 
-	fmt.Println("URL not supported !")
+	fmt.Println("URL not supported : ", url)
 	return nil
 }

@@ -7,6 +7,7 @@ import (
 type PlayersData struct {
 	gorm.Model
 	PlayerName string `json:"playerName"`
+	Source     string `json:"source"`
 	Url        string `json:"url"`
 }
 

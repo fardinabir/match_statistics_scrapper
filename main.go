@@ -12,7 +12,6 @@ func main() {
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("Error reading config file: %s", err)
 	}
-	//
 	db.ConnectDB()
 	job.StartTicker()
 	//processor.FetchPlayerStats()
